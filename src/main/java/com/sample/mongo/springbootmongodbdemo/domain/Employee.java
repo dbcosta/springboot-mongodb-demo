@@ -19,6 +19,7 @@ public class Employee {
     private long id;
     private String name;
     private int age;
+    private String gender;
     private LocalDate dateOfJoining;
     private BigDecimal salary;
     private String baseLocation;

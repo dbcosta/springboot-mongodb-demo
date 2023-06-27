@@ -1,9 +1,12 @@
 package com.sample.mongo.springbootmongodbdemo.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sample.mongo.springbootmongodbdemo.dto.EmployeeDto;
 import com.sample.mongo.springbootmongodbdemo.exception.EmployeeAgeException;
 import com.sample.mongo.springbootmongodbdemo.exception.EmployeeNotFoundException;
 import com.sample.mongo.springbootmongodbdemo.service.EmployeeService;
+
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +26,8 @@ public class EmployeeController {
     }
 
     @PostMapping("/employees")
-    public ResponseEntity<EmployeeDto> addEmployee(@RequestBody EmployeeDto employeeToBeAdded){
+    public ResponseEntity<EmployeeDto> addEmployee(@RequestBody @Valid EmployeeDto employeeToBeAdded) throws
+            JsonProcessingException {
         return new ResponseEntity<>(employeeService.addEmployee(employeeToBeAdded),HttpStatus.CREATED);
     }
 
@@ -33,7 +37,7 @@ public class EmployeeController {
     }
 
     @PutMapping("/employees/{id}")
-    public ResponseEntity<EmployeeDto> updateEmployee(@PathVariable long id,@RequestBody EmployeeDto employeeToBeUpdated) throws
+    public ResponseEntity<EmployeeDto> updateEmployee(@PathVariable long id,@RequestBody @Valid EmployeeDto employeeToBeUpdated) throws
             EmployeeNotFoundException, EmployeeAgeException {
         return new ResponseEntity<>(employeeService.updateEmployee(id, employeeToBeUpdated),HttpStatus.OK);
     }
